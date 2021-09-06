@@ -1,0 +1,72 @@
+include:
+    project: 'cicd_dev/CICDTemplate'
+    file: '/.gitlab-ci.api.loopback4.yml'
+
+variables:
+  BUILD_IMAGE_NAME: 'image_name'
+  SERVICE_NAME: 'zap-scan-service-name'
+  EXPOSE_PORT: 3000
+
+
+
+unit_test:
+  extends: auto_testing
+  only:
+    - master
+  tags:
+    - runner01
+
+
+build_dist:
+  extends: npm_build
+  only:
+    - master
+  tags:
+    - runner01
+
+build_test:
+  extends: build_testimage
+  only:
+    - master
+  tags:
+    - runner01
+
+deploy_test:
+  extends: deploy_for_test
+  only:
+    - master
+  tags:
+    - runner01
+
+
+zap_scan:
+  extends: vulnerability_scan
+  only:
+    - master
+  tags:
+    - runner01
+
+
+sonar_scan:
+  extends: code_scan
+  only:
+    - master
+  tags:
+    - runner01
+
+
+version_job:
+  extends: get_version
+  only:
+    - master
+    - pre-production
+    - production
+  tags:
+    - runner01
+
+build_running:
+  extends: docker-build
+  only:
+    - master
+  tags:
+    - runner01
