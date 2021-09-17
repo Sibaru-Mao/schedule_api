@@ -14,7 +14,7 @@ unit_test:
   only:
     - master
   tags:
-    - runner01
+    - wks-runner01
 
 
 build_dist:
@@ -22,21 +22,21 @@ build_dist:
   only:
     - master
   tags:
-    - runner01
+    - wks-runner01
 
 build_test:
   extends: build_testimage
   only:
     - master
   tags:
-    - runner01
+    - wks-runner01
 
 deploy_test:
   extends: deploy_for_test
   only:
     - master
   tags:
-    - runner01
+    - wks-runner01
 
 
 zap_scan:
@@ -44,7 +44,7 @@ zap_scan:
   only:
     - master
   tags:
-    - runner01
+    - wks-runner01
 
 
 sonar_scan:
@@ -52,7 +52,7 @@ sonar_scan:
   only:
     - master
   tags:
-    - runner01
+    - wks-runner01
 
 
 version_job:
@@ -62,11 +62,11 @@ version_job:
     - pre-production
     - production
   tags:
-    - runner01
+    - wks-runner01
 
 build_running:
   extends: docker-build
   only:
     - master
   tags:
-    - runner01
+    - wks-runner01
