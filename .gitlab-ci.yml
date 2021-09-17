@@ -1,5 +1,5 @@
 include:
-    project: 'Sibaru Tang/CICDTemplate'
+    project: 'cicd_wks/CICDTemplate'
     file: '/.gitlab-ci.api.loopback4.yml'
 
 variables:
