@@ -19,14 +19,19 @@ export class MachineTypeController {
   manchine = new machineType
   constructor() { }
 
-  @get("/getMachineType")
+  @get("/getMachineType", {responses: {'200': {description: '获取所有机种名称',}, },})
   async getMachineType(): Promise<any> {
     return await this.manchine.type();
   }
 
-  @get("/getMachineCapacity")
-  async getMachineCapacity(): Promise<any> {
-    return await this.manchine.capacity();
+  @get("/getMachineLine",{responses: {'200': {description: '获取所有线别名称',},},})
+  async getMachineLine(): Promise<any> {
+    return await this.manchine.line();
+  }
+
+  @get("/getMachineCapacity",{responses: {'200': {description: '获取所有产能数据',},},})
+  async getMachineCapacity(@param.query.string('date') date: any): Promise<any> {
+    return await this.manchine.capacity(JSON.parse(date));
   }
 
   @get("/getMachinePlant", {
@@ -48,17 +53,17 @@ export class MachineTypeController {
     return await this.manchine.plant(JSON.parse(date));
   }
 
-  @get("/changeMachinePlant", {
-    responses: {
-      '200': {
-        description: '修改机种数据',
-      },
-    },
-  })
+  @get("/getMachineDate", {responses: {'200': {description: '查询机种数据',},},})
+  async getMachineDate(@param.query.string('data')data: any,@param.query.string('date') date: any): Promise<any> {
+    return await this.manchine.data(JSON.parse(data), JSON.parse(date));
+  }
+  
+  @get("/changeMachinePlant", {responses: {'200': {description: '修改机种数据',},},})
   async changeMachinePlant(@param.query.string('data')data: any,@param.query.string('date') date: any): Promise<any> {
     await this.manchine.change(JSON.parse(data), JSON.parse(date));
     return 'OK'
   }
+
 
   // @get("/selectMachinePlant", {
   //   responses: {
