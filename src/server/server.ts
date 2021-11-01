@@ -4,10 +4,18 @@ export default class {
   mysql = new MysqlDataSource
 
   async select(table: any) {
-    return await this.mysql.execute(`select * from ${table}`)
+    try {
+      return await this.mysql.execute(`select * from ${table}`)    
+    } catch (error) {
+      console.log("!!select ERROR:",error);
+    }
   }
 
   async sql(sql: any) {
-    return await this.mysql.execute(sql)
+    try {
+      return await this.mysql.execute(sql)   
+    } catch (error) {
+      console.log("!!SQL ERROR:",error) 
+    }
   }
 }

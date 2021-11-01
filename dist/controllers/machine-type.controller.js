@@ -16,6 +16,10 @@ class MachineTypeController {
     async getMachineLine() {
         return await this.manchine.line();
     }
+    // @get("/getMachineType",{responses: {'200': {description: '获取所有机种类型名称',},},})
+    // async getMachineType(): Promise<any> {
+    //   return await this.manchine.line();
+    // }
     async getMachineCapacity(date) {
         return await this.manchine.capacity(JSON.parse(date));
     }

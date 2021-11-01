@@ -13,5 +13,5 @@ export default class {
     data(list: any, date: any): Promise<any>;
     change(data: any, date: any): Promise<void>;
     line(): Promise<any>;
-    find(): Promise<void>;
+    find(): Promise<any>;
 }

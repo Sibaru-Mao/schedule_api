@@ -227,6 +227,7 @@ class default_1 {
         return await this.mysql.sql('SELECT distinct line FROM line_planing_data');
     }
     async find() {
+        return await this.mysql.sql('SELECT distinct modeltype FROM line_planing_data');
     }
 }
 exports.default = default_1;

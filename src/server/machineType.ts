@@ -232,7 +232,7 @@ export default class {
   }
 
   async find() {
-
+    return await this.mysql.sql('SELECT distinct modeltype FROM line_planing_data')
   }
 }
 

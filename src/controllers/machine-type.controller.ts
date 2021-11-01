@@ -29,6 +29,11 @@ export class MachineTypeController {
     return await this.manchine.line();
   }
 
+  // @get("/getMachineType",{responses: {'200': {description: '获取所有机种类型名称',},},})
+  // async getMachineType(): Promise<any> {
+  //   return await this.manchine.line();
+  // }
+
   @get("/getMachineCapacity",{responses: {'200': {description: '获取所有产能数据',},},})
   async getMachineCapacity(@param.query.string('date') date: any): Promise<any> {
     return await this.manchine.capacity(JSON.parse(date));

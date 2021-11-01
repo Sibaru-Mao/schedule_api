@@ -55,7 +55,10 @@
     "@loopback/rest": "^10.0.0",
     "@loopback/rest-explorer": "^3.3.2",
     "@loopback/service-proxy": "^3.2.2",
+    "@types/xlsx": "0.0.36",
+    "excel": "^1.0.1",
     "loopback-connector-mysql": "^5.4.4",
+    "ts-xlsx": "0.0.11",
     "tslib": "^2.0.0"
   },
   "devDependencies": {
