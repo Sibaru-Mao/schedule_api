@@ -80,7 +80,7 @@ class default_1 {
         }
         for (let index = 0; index < data.length; index++) {
             let date = new Date(data[index][1]);
-            data[index][1] = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay();
+            data[index][1] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
             // data[index][1] = date.toLocaleDateString();
             if (data[index][0] != null) {
                 id_list.push(data[index][0]);
