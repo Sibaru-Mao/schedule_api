@@ -59,18 +59,19 @@ export default class {
 
   async excel(data: any) {
     let list = ['id', 'date', 'shift', 'line', 'mo', 'pn', 'qty', 'order_type', 'model', 'remark']
-    let id_list=[]
-    if (data[0][0]=="ID") {
+    let id_list = []
+    if (data[0][0] == "ID") {
       data.splice(0, 1)
     }
     for (let index = 0; index < data.length; index++) {
-      let date=new Date(data[index][1])
-      data[index][1] = date.toLocaleDateString();
-      if (data[index][0]!=null) {
+      let date = new Date(data[index][1])
+      data[index][1] = date.getFullYear() + '/' + date.getMonth() + '/' + date.getDay()
+      // data[index][1] = date.toLocaleDateString();
+      if (data[index][0] != null) {
         id_list.push(data[index][0])
       }
     }
-    if (id_list.length!=0) {
+    if (id_list.length != 0) {
       // let sql_tem =`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`
       await this.mysql.sql(`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`)
     }
