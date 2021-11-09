@@ -39,8 +39,7 @@ class MachineDetailController {
         return "删除成功！";
     }
     async excelToSql(body) {
-        await this.manchine.excel(body.data);
-        return "上传成功！";
+        return await this.manchine.excel(body.data);
     }
 }
 tslib_1.__decorate([

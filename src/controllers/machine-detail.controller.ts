@@ -44,8 +44,7 @@ export class MachineDetailController {
 
   @post("/excelToSql", { responses: { '200': { description: '上传excel数据' } } })
   async excelToSql(@requestBody() body: any): Promise<any> {
-    await this.manchine.excel(body.data);
-    return "上传成功！"
+    return await this.manchine.excel(body.data);
   }
 
   // {

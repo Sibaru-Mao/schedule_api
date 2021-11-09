@@ -86,12 +86,17 @@ class default_1 {
                 id_list.push(data[index][0]);
             }
         }
-        if (id_list.length != 0) {
-            // let sql_tem =`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`
-            await this.mysql.sql(`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`);
+        try {
+            if (id_list.length != 0) {
+                await this.mysql.sql(`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`);
+            }
+            let sql = this.insert_sql('line_detail_data', list, data);
+            await this.mysql.sql(sql);
         }
-        let sql = this.insert_sql('line_detail_data', list, data);
-        return await this.mysql.sql(sql);
+        catch (error) {
+            return { 'code': 444, 'status': '上传失败' };
+        }
+        return { 'code': 222, 'status': '上传成功' };
     }
     insert_sql(database, list, data) {
         let template = list.join(',');
@@ -102,6 +107,12 @@ class default_1 {
         };
         if (Array.isArray(data[0])) {
             data.forEach((element, index) => {
+                if (database == 'line_detail_data' && element.length < 10) {
+                    let l = 10 - element.length;
+                    for (let index = 0; index < l; index++) {
+                        element.push(null);
+                    }
+                }
                 insert_sql += insert(index);
                 let sql = '(';
                 element.forEach((elem, id) => {

@@ -5,6 +5,9 @@ export default class {
     detail_data(list: any, date: any): Promise<any>;
     delete_detail_data(id: any): Promise<any>;
     change_detail_data(data: any): Promise<any>;
-    excel(data: any): Promise<any>;
+    excel(data: any): Promise<{
+        code: number;
+        status: string;
+    }>;
     insert_sql(database: any, list: any, data: any): string;
 }

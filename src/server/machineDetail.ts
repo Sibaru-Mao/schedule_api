@@ -65,18 +65,22 @@ export default class {
     }
     for (let index = 0; index < data.length; index++) {
       let date = new Date(data[index][1])
-      data[index][1] = date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate()
+      data[index][1] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
       // data[index][1] = date.toLocaleDateString();
       if (data[index][0] != null) {
         id_list.push(data[index][0])
       }
     }
-    if (id_list.length != 0) {
-      // let sql_tem =`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`
-      await this.mysql.sql(`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`)
+    try {
+      if (id_list.length != 0) {
+        await this.mysql.sql(`DELETE FROM line_detail_data WHERE id IN (${id_list.join(',')})`)
+      }
+      let sql = this.insert_sql('line_detail_data', list, data)
+      await this.mysql.sql(sql)
+    } catch (error) {
+      return { 'code': 444, 'status': '上传失败' }
     }
-    let sql = this.insert_sql('line_detail_data', list, data)
-    return await this.mysql.sql(sql)
+    return { 'code': 222, 'status': '上传成功' }
   }
 
   insert_sql(database: any, list: any, data: any) {
@@ -88,6 +92,12 @@ export default class {
     }
     if (Array.isArray(data[0])) {
       data.forEach((element: any, index: any) => {
+        if (database == 'line_detail_data' && element.length < 10) {
+          let l = 10 - element.length
+          for (let index = 0; index < l; index++) {
+            element.push(null)
+          }
+        }
         insert_sql += insert(index)
         let sql = '('
         element.forEach((elem: any, id: any) => {
