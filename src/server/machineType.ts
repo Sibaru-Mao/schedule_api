@@ -59,16 +59,16 @@ export default class {
     let insert_sql = "INSERT INTO line_planing_data(shiftdate,line,line_id,day_day_modeltype,day_day_quantity,day_day_status,day_night_modeltype,day_night_quantity,day_night_status) VALUES"
     data.forEach((element: any) => {
       element.forEach((elem: any, id: any) => {
-        if (id != 0) {
+        if (id != 0 && element[0] != 0) {
           for (let index = 0; index < elem.length; index += 2) {
             list.push({
               'shiftdate': date[index / 2],
               'line': element[0],
               'line_id': id - 1,
-              'day_day_modeltype': elem[index]['model'],
+              'day_day_modeltype': elem[index]['model'] == null ? "" : elem[index]['model'],
               'day_day_quantity': elem[index]['number'],
               'day_day_status': elem[index]['status'],
-              'day_night_modeltype': elem[index + 1]['model'],
+              'day_night_modeltype': elem[index + 1]['model'] == null ? "" : elem[index + 1]['model'],
               'day_night_quantity': elem[index + 1]['number'],
               'day_night_status': elem[index + 1]['status']
             });
@@ -78,9 +78,9 @@ export default class {
     });
     list.forEach((element: any, index: any) => {
       if (index != 0) {
-        insert_sql += `,('` + element.shiftdate + `','` + element.line + `',` + element.line_id + `,'` + element.day_day_modeltype + `', ` + Number(element.day_day_quantity) +`, `+element.day_day_status+ `,'` + element.day_night_modeltype + `', ` + Number(element.day_night_quantity) +`, `+element.day_night_status+`)`
+        insert_sql += `,('` + element.shiftdate + `','` + element.line + `',` + element.line_id + `,` + JSON.stringify(element.day_day_modeltype) + `, ` + Number(element.day_day_quantity) + `, ` + element.day_day_status + `,` + JSON.stringify(element.day_night_modeltype) + `, ` + Number(element.day_night_quantity) + `, ` + element.day_night_status + `)`
       } else {
-        insert_sql += `('` + element.shiftdate + `','` + element.line + `',` + element.line_id + `,'` + element.day_day_modeltype + `', ` + Number(element.day_day_quantity) + `, `+element.day_day_status+ `,'` + element.day_night_modeltype + `', ` + Number(element.day_night_quantity) +`, `+element.day_night_status+`)`
+        insert_sql += `('` + element.shiftdate + `','` + element.line + `',` + element.line_id + `,` + JSON.stringify(element.day_day_modeltype) + `, ` + Number(element.day_day_quantity) + `, ` + element.day_day_status + `,` + JSON.stringify(element.day_night_modeltype) + `, ` + Number(element.day_night_quantity) + `, ` + element.day_night_status + `)`
       }
     });
     return insert_sql
@@ -167,9 +167,9 @@ export default class {
   }
   async capacity(date: any) {
     const res: any = {}
-    let data=(await this.mysql.select('V_SFCLINEOUTPUT'))
+    let data = (await this.mysql.select('V_SFCLINEOUTPUT'))
 
-    data=this.filter_date(data,date)
+    data = this.filter_date(data, date)
     //分类求和
     data.forEach((e: any) => {
       if (!res[e.line]) {
@@ -187,14 +187,14 @@ export default class {
     })
 
     Object.keys(res).forEach(element => {
-      let list:any=[]
+      let list: any = []
       Object.keys(res[element]).forEach(elem => {
         list.push({
-          "model":elem,
-          "output":res[element][elem]
+          "model": elem,
+          "output": res[element][elem]
         })
       });
-      res[element]=list
+      res[element] = list
     });
     return res
   }

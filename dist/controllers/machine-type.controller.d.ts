@@ -7,5 +7,5 @@ export declare class MachineTypeController {
     getMachineCapacity(date: any): Promise<any>;
     getMachinePlant(date: any): Promise<any>;
     getMachineDate(data: any, date: any): Promise<any>;
-    changeMachinePlant(data: any, date: any): Promise<any>;
+    changeMachinePlant(body: any): Promise<any>;
 }

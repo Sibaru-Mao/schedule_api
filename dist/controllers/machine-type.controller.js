@@ -32,8 +32,8 @@ class MachineTypeController {
     async getMachineDate(data, date) {
         return await this.manchine.data(JSON.parse(data), JSON.parse(date));
     }
-    async changeMachinePlant(data, date) {
-        await this.manchine.change(JSON.parse(data), JSON.parse(date));
+    async changeMachinePlant(body) {
+        await this.manchine.change(JSON.parse(body.data), JSON.parse(body.date));
         return 'OK';
     }
 }
@@ -83,11 +83,10 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", Promise)
 ], MachineTypeController.prototype, "getMachineDate", null);
 tslib_1.__decorate([
-    rest_1.get("/changeMachinePlant", { responses: { '200': { description: '修改机种数据', }, }, }),
-    tslib_1.__param(0, rest_1.param.query.string('data')),
-    tslib_1.__param(1, rest_1.param.query.string('date')),
+    rest_1.post("/changeMachinePlant", { responses: { '200': { description: '修改机种数据', }, }, }),
+    tslib_1.__param(0, rest_1.requestBody()),
     tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [Object, Object]),
+    tslib_1.__metadata("design:paramtypes", [Object]),
     tslib_1.__metadata("design:returntype", Promise)
 ], MachineTypeController.prototype, "changeMachinePlant", null);
 exports.MachineTypeController = MachineTypeController;

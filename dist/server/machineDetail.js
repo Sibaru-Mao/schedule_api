@@ -85,6 +85,9 @@ class default_1 {
             if (data[index][0] != null) {
                 id_list.push(data[index][0]);
             }
+            else if (!date || data[index][1] == null) {
+                return { 'code': 445, 'status': '上传失败' };
+            }
         }
         try {
             if (id_list.length != 0) {
@@ -96,7 +99,7 @@ class default_1 {
         catch (error) {
             return { 'code': 444, 'status': '上传失败' };
         }
-        return { 'code': 222, 'status': '上传成功' };
+        return { 'code': 200, 'status': '上传成功' };
     }
     insert_sql(database, list, data) {
         let template = list.join(',');
