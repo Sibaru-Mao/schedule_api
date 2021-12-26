@@ -1,5 +1,4 @@
 import server from './server'
-import { read, IWorkBook } from 'ts-xlsx';
 
 
 export default class {
@@ -84,7 +83,7 @@ export default class {
       });
     } else {
       let sql = '("'
-      sql+=data.join('","')
+      sql += data.join('","')
       sql += '")'
       insert_sql += sql
     }
@@ -93,7 +92,7 @@ export default class {
     return insert_sql
 
   }
-   
+
 
   async get_permission(user: any) {
     let sql = `SELECT permission FROM whitelist WHERE id=${user}`

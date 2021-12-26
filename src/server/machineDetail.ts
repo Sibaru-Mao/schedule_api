@@ -65,13 +65,13 @@ export default class {
     }
     for (let index = 0; index < data.length; index++) {
       let date = new Date(data[index][1])
-      data[index][1] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
       // data[index][1] = date.toLocaleDateString();
       if (data[index][0] != null) {
         id_list.push(data[index][0])
-      } else if (!date || data[index][1] == null) {
+      } else if (isNaN(date.getTime()) || data[index][1] == null) {
         return { 'code': 445, 'status': '上传失败' }
       }
+      data[index][1] = date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate()
     }
     try {
       if (id_list.length != 0) {
